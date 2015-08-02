@@ -1,48 +1,49 @@
 <html> 
     <head>
 	<title>test</title>
+	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript">
-	    function Init()
-	    {
-		var nodes = document.getElementsByName("test");
-		for(var i=0; i<nodes.length; i++){
-		    var url = "result.php?name=" + nodes[i].value;
-		    getResult(url);
-		}
+	    function init(){
+		$("p").fadeOut();
+		//getPrice();
+		//setInterval(getPrice(),1000*6*10);
 	    }
-	    function getResult(url)
+	    function getPrice(value)
 	    {
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = result;
-		xmlhttp.open("GET",url,false);
-		xmlhttp.send();
-
+		    var url = "result.php?name=" + value;
+		    $.get(url,result);
 	    }
 
-	    function result()
+	    function result(data,status)
 	    {
-		if(xmlhttp.readyState==4 && xmlhttp.status==200){
-		    var result = xmlhttp.responseText.split(" ");
-		    document.getElementById(result[0]).innerHTML= result[1]; 
-		    delete xmlhttp;
-		    xmlhttp = null;
-		}
+		var ss = data.split(" ");
+		$("#avg").text(ss[1]).fadeIn("slow");
+
 	    }
-	    window.onload = setInterval(Init,1000*5);
+	    function out()
+	    {
+		$("#avg").fadeOut();	
+	    }
+	    window.onload = init; 
 	</script>
     <head>
     <body>
 	<div>	
 	    <table align="center">
 		<tr>
-		    <td><input type="text" name="test" value="goog"></td>
-		    <td><p id="goog"></p></td>
+		    <td><input type="text" name="test" value="goog" 
+		    onclick="getPrice('goog')" onmouseout="out()"></td>
 		</tr>
 		</tr>
-		    <td><input type="text" name="test" value="aapl"></td>
-		    <td><p id="aapl"></p></td>
+		    <td><input type="text" name="test" value="aapl" 
+		    onclick="getPrice('aapl')" onmouseout="out()"></td>
 		</tr>
 	    </table>
+	</div>
+	<div align="center">
+	    <p id="avg"></p> 
+	    <p id="min"></p> 
+	    <p id="max"></p> 
 	</div>
     </body>
 </html>
