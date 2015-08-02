@@ -1,0 +1,48 @@
+<html> 
+    <head>
+	<title>test</title>
+	<script type="text/javascript">
+	    function Init()
+	    {
+		var nodes = document.getElementsByName("test");
+		for(var i=0; i<nodes.length; i++){
+		    var url = "result.php?name=" + nodes[i].value;
+		    getResult(url);
+		}
+	    }
+	    function getResult(url)
+	    {
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = result;
+		xmlhttp.open("GET",url,false);
+		xmlhttp.send();
+
+	    }
+
+	    function result()
+	    {
+		if(xmlhttp.readyState==4 && xmlhttp.status==200){
+		    var result = xmlhttp.responseText.split(" ");
+		    document.getElementById(result[0]).innerHTML= result[1]; 
+		    delete xmlhttp;
+		    xmlhttp = null;
+		}
+	    }
+	    window.onload = setInterval(Init,1000*5);
+	</script>
+    <head>
+    <body>
+	<div>	
+	    <table align="center">
+		<tr>
+		    <td><input type="text" name="test" value="goog"></td>
+		    <td><p id="goog"></p></td>
+		</tr>
+		</tr>
+		    <td><input type="text" name="test" value="aapl"></td>
+		    <td><p id="aapl"></p></td>
+		</tr>
+	    </table>
+	</div>
+    </body>
+</html>
