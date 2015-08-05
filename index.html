@@ -1,49 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html> 
-    <head>
-	<title>test</title>
-	<script type="text/javascript" src="jquery.js"></script>
-	<script type="text/javascript">
-	    function init(){
-		$("p").fadeOut();
-		//getPrice();
-		//setInterval(getPrice(),1000*6*10);
-	    }
-	    function getPrice(value)
-	    {
-		    var url = "result.php?name=" + value;
-		    $.get(url,result);
-	    }
-
-	    function result(data,status)
-	    {
-		var ss = data.split(" ");
-		$("#avg").text(ss[1]).fadeIn("slow");
-
-	    }
-	    function out()
-	    {
-		$("#avg").fadeOut();	
-	    }
-	    window.onload = init; 
-	</script>
-    <head>
-    <body>
-	<div>	
-	    <table align="center">
-		<tr>
-		    <td><input type="text" name="test" value="goog" 
-		    onclick="getPrice('goog')" onmouseout="out()"></td>
-		</tr>
-		</tr>
-		    <td><input type="text" name="test" value="aapl" 
-		    onclick="getPrice('aapl')" onmouseout="out()"></td>
-		</tr>
-	    </table>
-	</div>
-	<div align="center">
-	    <p id="avg"></p> 
-	    <p id="min"></p> 
-	    <p id="max"></p> 
-	</div>
-    </body>
+  <head>
+    <title>test</title>
+      <script type="text/javascript" src="jquery.js"></script>
+      <link type="text/css" href="layout.css" rel="stylesheet">
+      <script type="text/javascript">
+	function init(){
+	  $("p").fadeOut();
+	}
+	function getPrice(value){
+	  var url = "result.php?name=" + value;
+	  $.get(url,result);
+	}
+	function result(data,status){
+	  var ss = data.split(" ");
+	  $("#avg").text("avg:"+ss[0]).fadeIn("fast");
+	  $("#min").text("max:"+ss[1]).fadeIn("fast");
+	  $("#max").text("min:"+ss[2]).fadeIn("fast");
+	}
+	function out(){
+	  $("p").fadeOut("fast");	
+	}
+	window.onload = init; 
+      </script>
+  <head>
+  <body>
+    <div id="container">	
+      <div id="header">
+	<h1>Welcome!</h1>
+      </div>
+    <div id="mainContent">
+      <div id="sidebar">
+	<table align="center">
+	  <tr>
+    	    <td><abbr  class="name" title="Google" 
+	    onmouseover="getPrice('goog')" onmouseout="out()">GOOG</abbr></td>
+    	  </tr>
+    	  <tr>
+    	    <td><abbr class="name" title="Apple" 
+	    onmouseover="getPrice('aapl')" onmouseout="out()">AAPL</abbr></td>
+    	  </tr>
+	</table>
+      </div>
+      <div id="content">
+	<p id="avg"></p> 
+	<p id="min"></p> 
+	<p id="max"></p> 
+      </div>
+    </div>
+  </body>
 </html>
